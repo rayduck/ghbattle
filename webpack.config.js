@@ -3,7 +3,7 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filename: 'index.html',
   inject: 'body'
-})
+});
 
 module.exports={
   entry: [
@@ -18,5 +18,5 @@ module.exports={
       {test:/\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
     ]
   },
-  plugin: [HtmlWebpackPluginConfig]
-}
+  plugins: [HtmlWebpackPluginConfig]
+};
