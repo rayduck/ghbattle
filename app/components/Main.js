@@ -9,6 +9,5 @@ var Main = React.createClass({
     )
   }
 });
-//class is reserved so use className
 
 module.exports = Main;
