@@ -3,7 +3,7 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
-var hasHistory = ReactRouter.hashHistory;
+var hashHistory = ReactRouter.hashHistory;
 var Main = require('../components/Main');
 var Home = require('../components/Home');
 
