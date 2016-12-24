@@ -1,10 +1,10 @@
-var React= require('react');
-var ReactRouter= require('react-router');
-var Link = ReactRouter.Link;
-var transparentBg = require('../styles').transparentBg;
+var React = require('react')
+var ReactRouter = require('react-router')
+var Link = ReactRouter.Link
+var transparentBg = require('../styles').transparentBg
 
 var Home = React.createClass({
-  render: function() {
+  render: function () {
     return (
       <div className='jumbotron col-sm-12 text-center' style={transparentBg}>
         <h1>Github Battle</h1>
@@ -15,6 +15,6 @@ var Home = React.createClass({
       </div>
     )
   }
-});
+})
 
-module.exports = Home;
+module.exports = Home
