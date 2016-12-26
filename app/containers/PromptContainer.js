@@ -1,53 +1,61 @@
-var React = require('react')
-var Prompt = require('../components/Prompt')
+import React, { Component } from 'react'
+import Prompt from '../components/Prompt'
 
-var PromptContainer = React.createClass({
-  propTypes: {
-    routeParams: React.PropTypes.object.isRequired,
-    route: React.PropTypes.object.isRequired
-  },
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
-  getInitialState: function () {
-    return {
+class PromptContainer extends Component {
+  constructor () {
+    super()
+    this.state = {
       username: ''
     }
-  },
-  handleUpdateUser: function (e) {
+  }
+
+  handleUpdateUser (e) {
     this.setState({
       username: e.target.value
     })
-  },
-  handleSubmitUser: function (e) {
+  }
+
+  handleSubmitUser (e) {
     e.preventDefault()
-    var username = this.state.username
+    const { username } = this.state
     this.setState({
       username: ''
     })
 
-    if (this.props.routeParams.playerOne) {
+    const { playerOne } = this.props.routeParams
+
+    if (playerOne) {
       this.context.router.push({
         pathname: '/battle',
         query: {
-          playerOne: this.props.routeParams.playerOne,
-          playerTwo: this.state.username
+          playerOne,
+          playerTwo: username
         }
       })
     } else {
-      this.context.router.push('/playerTwo/' + this.state.username)
+      this.context.router.push(`/playerTwo/${this.state.username}`)
     }
-  },
-  render: function () {
+  }
+
+  render () {
     return (
       <Prompt
-        onSubmitUser={this.handleSubmitUser}
-        onUpdateUser={this.handleUpdateUser}
+        onSubmitUser={(event) => this.handleSubmitUser(event)}
+        onUpdateUser={(event) => this.handleUpdateUser(event)}
         header={this.props.route.header}
         username={this.state.username}
       />
     )
   }
-})
+}
 
-module.exports = PromptContainer
+PromptContainer.propTypes = {
+  routeParams: React.PropTypes.object.isRequired,
+  route: React.PropTypes.object.isRequired
+}
+
+PromptContainer.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default PromptContainer

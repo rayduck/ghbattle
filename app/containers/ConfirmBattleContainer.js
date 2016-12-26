@@ -1,45 +1,54 @@
-var React = require('react')
-var ConfirmBattle = require('../components/ConfirmBattle')
-var githubHelpers = require('../utils/githubHelpers')
+import React, { Component } from 'react'
+import ConfirmBattle from '../components/ConfirmBattle'
+import { getPlayersInfo } from '../utils/githubHelpers'
 
-var ConfirmBattleContainer = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
-  propTypes: {
-    location: React.PropTypes.object.isRequired
-  },
-  getInitialState: function () {
-    return {
+class ConfirmBattleContainer extends Component {
+  constructor () {
+    super()
+    this.state = {
       isLoading: true,
       playersInfo: []
     }
-  },
-  componentDidMount: function () {
-    var query = this.props.location.query
-    githubHelpers.getPlayersInfo([query.playerOne, query.playerTwo]).then(function (players) {
+  }
+
+  async componentDidMount () {
+    const { query } = this.props.location
+    try {
+      const players = await getPlayersInfo([query.playerOne, query.playerTwo])
       this.setState({
         isLoading: false,
         playersInfo: [players[0], players[1]]
       })
-    }.bind(this))
-  },
-  handleInitiateBattle: function () {
+    } catch (error) {
+      console.warn('Error in ConfirmBattleContainer', error)
+    }
+  }
+
+  handleInitiateBattle () {
     this.context.router.push({
       pathname: '/results',
       state: {
         playersInfo: this.state.playersInfo
       }
     })
-  },
-  render: function () {
+  }
+
+  render () {
     return (
       <ConfirmBattle
         isLoading={this.state.isLoading}
-        onInitiateBattle={this.handleInitiateBattle}
+        onInitiateBattle={() => this.handleInitiateBattle()}
         playersInfo={this.state.playersInfo} />
     )
   }
-})
+}
 
-module.exports = ConfirmBattleContainer
+ConfirmBattleContainer.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+ConfirmBattleContainer.propTypes = {
+  location: React.PropTypes.object.isRequired
+}
+
+export default ConfirmBattleContainer

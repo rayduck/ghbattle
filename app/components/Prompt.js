@@ -1,5 +1,5 @@
-var React = require('react')
-var transparentBg = require('../styles').transparentBg
+import React from 'react'
+import { transparentBg } from '../styles'
 
 // functional stateless components
 function Prompt (props) {
@@ -30,4 +30,4 @@ Prompt.propTypes = {
   username: React.PropTypes.string.isRequired
 }
 
-module.exports = Prompt
+export default Prompt
